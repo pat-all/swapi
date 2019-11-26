@@ -103,7 +103,7 @@ const fetchCategoryItem = ({ category, url }) => {
 
 export const fetchCategoryItemIfNeeded = (category, categoryName, url) => {
   return dispatch => {
-    if (!searchInCategory(category, url)) {
+    if (!searchInCategory(category, {"url" : url})) {
       dispatch(fetchCategoryItem({ category: categoryName, url }));
     }
   };

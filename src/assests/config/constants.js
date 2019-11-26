@@ -19,3 +19,7 @@ export const notFoundTypes = {
   category: CATEGORY,
   page: PAGE
 }
+
+export const SEARCH_FIELDS = [
+  "name", "title", "model"
+]

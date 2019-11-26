@@ -1,4 +1,4 @@
-import { SWAPI_BASE_URL, ITEMS_ON_PAGE, regExps } from "./constants";
+import { SWAPI_BASE_URL, ITEMS_ON_PAGE, regExps, SEARCH_FIELDS } from "./constants";
 
 export const pageExpTest = str => regExps.page.test(str);
 
@@ -58,8 +58,10 @@ export const replaceUrl = (categories, url) => {
   const id = calcIdFromUrl(urlId);
   const item = categories[categoryName]
     ? categories[categoryName].pages
-    : categories[categoryName].pages[page]
+    ? categories[categoryName].pages[page]
     ? categories[categoryName].pages[page][id]
+    : null
+    : null 
     : null;
   return item ? getFirstValue(item) : null;
 };
@@ -67,12 +69,13 @@ export const replaceUrl = (categories, url) => {
 const findItemBySearchData = (arr, searchData) =>
   arr.find(el => changeUrl(el[searchData.fieldName]) === searchData.value);
 
-export const searchInCategory = (category = {}, url) => {
+export const searchInCategory = (category = {}, searchData = {}) => {
   const { pages } = category;
+  const { fieldName, fieldvalue } = searchData
   const reqExp = /[0-9]$/
   let result = null
-  if(pages && url){
-    url = reqExp.test(url) ? url + "/" : url
+  if(pages && fieldName && fieldvalue){
+    fieldName =  fieldName === 'url' ? reqExp.test(fieldName) ? fieldName + "/" : fieldName : fieldName
     pages.forEach(page => {
       page.forEach(item => {
         if(changeUrl(item.url) === url) result = item
@@ -82,6 +85,14 @@ export const searchInCategory = (category = {}, url) => {
   return result
 };
 
-const searchData = query => {
-  
+const searchData = (set = {}) => {
+  const { categories, category, query } = set
+  const result = []
+  if(categories && categories[category] && query){
+    SEARCH_FIELDS.forEach(field => {
+      const iterResult = searchInCategory(categories[category], {field: query})
+      if(iterResult) result.push(iterResult)
+    })
+  }
+  return result
 }

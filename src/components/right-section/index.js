@@ -31,7 +31,7 @@ const RightSection = () => {
   })
 
   if(!isFetching && category) {
-    item = searchInCategory(category, url)
+    item = searchInCategory(category, {"url": url})
     console.log(item)
     itemKeys = item ? Object.keys(item) : []
   }
