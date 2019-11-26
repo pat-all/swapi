@@ -1,0 +1,21 @@
+@import '../../assests/scss/vars';
+
+.pagination {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  ul {
+    @extend %buttons-container;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+}
+
+.page-buttons-container {
+  @extend %buttons-container;
+  border: 3px solid $button-color;
+  padding: 10px;
+  margin: 10px 0;
+}

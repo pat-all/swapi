@@ -1,0 +1,12 @@
+@import '../../assests/scss/vars';
+
+#modal-root {
+  position: relative;
+  z-index: 999;
+}
+
+.modal {
+  background-color: $special-color;
+  @extend %modal
+}
+

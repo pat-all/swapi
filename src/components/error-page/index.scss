@@ -1,0 +1,12 @@
+@import '../../assests/scss/vars';
+
+.error-page {
+  background-color: $special-color;
+  color: $header-font-color;
+  width: 100%;
+  height: 100%;
+}
+
+.error-modal {
+  @extend %modal;
+}

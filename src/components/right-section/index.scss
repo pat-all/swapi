@@ -1,0 +1,28 @@
+@import '../../assests/scss/vars';
+
+.right-section{
+  grid-column: 2 / 3;
+  background-color: $right-section-color;
+}
+
+.data-container {
+  width: 100%;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 1fr 3fr;
+}
+
+.left-cell {
+  grid-column: 1 / 2;
+  padding-left: 10px
+}
+
+.right-cell {
+  grid-column: 2 / 3;
+  a {
+    @extend %link-decoration;
+    color: $active-link-color;
+  }
+}

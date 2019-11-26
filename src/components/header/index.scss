@@ -1,0 +1,44 @@
+@import '../../assests/scss/vars';
+
+header {
+  display: grid;
+  grid-auto-flow: column;
+  justify-content: space-between;
+  padding: 10px;
+  background-color: $special-color;
+  color: $header-font-color;
+}
+
+.header-item {
+  padding: 10px 20px;
+  font-size: 20px;
+  text-transform: capitalize;
+  cursor: pointer;
+}
+
+.header-section {
+  display: grid;
+  align-items: center;
+  grid-auto-flow: column;
+}
+
+.header-logo {
+  font-weight: bold;
+}
+
+.nav-top {
+  @extend %link-decoration
+}
+
+.selected {
+  color: $active-link-color;
+  &:before {
+    content: '';
+    bottom: 0;
+    left: 0;
+    position: absolute;
+    width: 100%;
+    height: 2px;
+    background-color: $active-link-color;
+  }
+}

@@ -1,0 +1,20 @@
+header {
+  display: grid;
+  grid-auto-flow: column;
+  justify-content: space-between;
+  padding: 10px;
+  background-color: #689cd2;
+  color: #fff;
+}
+.header-item {
+  padding: 10px 20px;
+  font-size: 20px;
+}
+.header-section {
+  display: grid;
+  align-items: center;
+  grid-auto-flow: column;
+}
+.header-logo {
+  font-weight: bold;
+}

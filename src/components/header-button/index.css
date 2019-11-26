@@ -1,0 +1,9 @@
+a {
+  color: #fff;
+  text-decoration: none;
+}
+.header-button:hover {
+  background-color: #ff9900;
+  border-radius: 4px;
+  cursor: pointer;
+}

@@ -1,0 +1,58 @@
+//colors:
+$special-color: #37474f;
+$header-font-color: #fff;
+$special-dark-color: #263238;
+$left-section-color: #757575;
+$right-section-color: #bdbdbd;
+$left-section-hover-color: #efebe9;
+$active-link-color: #ff6d00;
+$button-color: #ff6d00;
+$button-hover-color: #ff9100;
+
+//extentions:
+%button {
+  border: 3px solid $button-color;
+  color: $button-color;
+  border-radius: 4px;
+  background: transparent;
+  cursor: pointer;
+  &:hover {
+    background: $button-color;
+  }
+}
+
+%buttons-container {
+  display: grid;
+  grid-auto-flow: column;
+  grid-gap: 10px;
+  justify-content: center;
+}
+
+%link-decoration {
+  position: relative;
+  &:before {
+    content: '';
+    bottom: 0;
+    left: 0;
+    position: absolute;
+    width: 100%;
+    height: 2px;
+    background-color: $active-link-color;
+    transition: 0.2s;
+    transform: scaleX(0);
+  }
+  &:hover:before {
+    transform: scaleX(1);
+  }
+}
+
+%modal {
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

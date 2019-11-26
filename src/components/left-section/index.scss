@@ -1,0 +1,11 @@
+@import '../../assests/scss/vars';
+
+.left-section{
+  grid-column: 1 / 2;
+  background-color: $left-section-color;
+}
+
+.legend{
+  text-align: center;
+  color: $active-link-color;
+}

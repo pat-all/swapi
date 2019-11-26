@@ -1,0 +1,16 @@
+@import '../../assests/scss/vars';
+
+.page-button {
+  @extend %button;
+  width: 39px;
+  height: 39px;
+  a {
+    color: $button-color;
+  }
+  &:hover {
+    color: $left-section-color;
+    a {
+      color: $left-section-color;
+    }
+  }
+}

@@ -1,0 +1,14 @@
+@import '../../assests/scss/vars';
+
+a {
+  text-decoration: none;
+  color: $header-font-color;
+}
+
+.header-button {
+  @extend %button;
+  font-weight: 800;
+  &:hover {
+    color: $special-color;
+  }
+}

@@ -1,0 +1,40 @@
+@import '../../assests/scss/vars'; 
+
+.left-section-item {
+  padding: 10px;
+  margin: 0;
+  position: relative;
+  &:before {
+    content: '';
+    bottom: 0;
+    left: 0;
+    position: absolute;
+    width: 3px;
+    height: 0%;
+    background-color: $active-link-color;
+    transition: 0.3s;
+    //transform: scaleY(0);
+  }
+  &:hover:before {
+    //transform: scaleY(1);
+    height: 100%;
+  }
+}
+
+h5 {
+  padding: 0 10px;
+  margin: 0;
+}
+
+.selected-left{
+  color: $active-link-color;
+  &:before {
+    content: '';
+    bottom: 0;
+    left: 0;
+    position: absolute;
+    width: 3px;
+    height: 100%;
+    background-color: $active-link-color;
+  }
+}

@@ -1,0 +1,4 @@
+.left-section {
+  grid-column: 1 / 2;
+  background-color: yellow;
+}
