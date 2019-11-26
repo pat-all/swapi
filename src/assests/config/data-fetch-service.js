@@ -15,10 +15,10 @@ import {
 } from "../../redux-stuff/reducers/category-slice";
 
 const headers = {
-  "Origin": "http://localhost:3000/ ",
-  /*"Access-Control-Allow-Methods": "GET, POST, PUT",
+  "Access-Control-Allow-Origin": "http://localhost:3000/",
+  "Access-Control-Allow-Methods": "GET, POST, PUT",
   "Access-Control-Allow-Headers": "Content-Type",
-  "Content-Type": "application/json"*/
+  "Content-Type": "application/json"
 };
 
 const fetchCategoriesNames = () => {
@@ -54,7 +54,7 @@ export const fetchCategoriesNamesIfNeeded = state => {
 const fetchCategoryPage = ({ category, page }) => {
   return dispatch => {
     dispatch(requestPage({ category, page }));
-    return fetch(urlBuilder({ category, page }))
+    return fetch(urlBuilder({ category, page }, {headers}))
       .then(response => response.json())
       .then(json => dispatch(receivePage({ category, json, page })))
       .catch(err => {
@@ -89,11 +89,11 @@ export const fetchCategoryPageIfNeeded = (
 const fetchCategoryItem = ({ category, url }) => {
   return dispatch => {
     dispatch(requestItem({ url }));
-    return fetch(urlBuilder({ url }))
+    return fetch(urlBuilder({ url }, {headers}))
       .then(response => response.json())
       .then(json => dispatch(receiveItem({ category, json })))
       .catch(err => {
-        console.log("oops, got an error");
+        console.log(err);
         dispatch(cancelFetching());
         dispatch(setConnectionError({ isError: true, log: err.message }));
         //TODO connection error

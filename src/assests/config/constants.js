@@ -1,5 +1,5 @@
-//export const SWAPI_BASE_URL = 'https://swapi.co/api'
-export const SWAPI_BASE_URL = 'http://localhost:3030/api'
+export const SWAPI_BASE_URL = 'http://cors-anywhere.herokuapp.com/https://swapi.co/api'
+//export const SWAPI_BASE_URL = 'http://localhost:3030/api'
 
 export const ITEMS_ON_PAGE = 10
 

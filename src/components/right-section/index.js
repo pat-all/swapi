@@ -17,7 +17,8 @@ const RightSection = () => {
   const { url } = useRouteMatch()
   const dispatch = useDispatch()
   const { category: categoryName, id } = useParams()
-  const { entities, isFetching, connectionError } = useSelector(state => state.categories)
+  const { entities, isFetching } = useSelector(state => state.categories)
+  const connectionError  = useSelector(state => state.errors.connectionError.isError)
   const category = entities[categoryName]
 
   let itemKeys = null
@@ -28,16 +29,16 @@ const RightSection = () => {
       dispatch(fetchCategoryItemIfNeeded(category, categoryName, url))
     }
   })
-  if (!isFetching && category) {
-    item = searchInCategory(category, [{ fieldName: 'url', value: url }])
-      ? searchInCategory(category, [{ fieldName: 'url', value: url }])[0]
-      : null
+
+  if(!isFetching && category) {
+    item = searchInCategory(category, url)
+    console.log(item)
     itemKeys = item ? Object.keys(item) : []
   }
   return (
     <section className="right-section">
       <div className="data-container">
-        {itemKeys.length > 0 &&
+        {itemKeys && itemKeys.length > 0 &&
           itemKeys.map((key, i) => {
             const style =
               i % 2 === 0

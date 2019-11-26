@@ -67,20 +67,21 @@ export const replaceUrl = (categories, url) => {
 const findItemBySearchData = (arr, searchData) =>
   arr.find(el => changeUrl(el[searchData.fieldName]) === searchData.value);
 
-export const searchInCategory = (category = {}, searchDataList = []) => {
+export const searchInCategory = (category = {}, url) => {
   const { pages } = category;
-  const result = [];
-  if (pages) {
-    for (let i = 0; i < searchDataList.length; i++) {
-      for (let j = 0; j < pages.length; j++) {
-        const searchData = searchDataList[i];
-        const page = pages[j];
-        if (page && searchData) {
-          const item = findItemBySearchData(page, searchData);
-          if (item) result.push(item);
-        }
-      }
-    }
-    return result.length > 0 ? result : null;
+  const reqExp = /[0-9]$/
+  let result = null
+  if(pages && url){
+    url = reqExp.test(url) ? url + "/" : url
+    pages.forEach(page => {
+      page.forEach(item => {
+        if(changeUrl(item.url) === url) result = item
+      })
+    })
   }
+  return result
 };
+
+const searchData = query => {
+  
+}
