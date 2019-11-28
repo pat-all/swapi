@@ -90,28 +90,3 @@ const RightSection = () => {
 };
 
 export default RightSection;
-
-/*key !== "url" &&
-  isUrlCheck(item[key]) && (
-    <div className="right-cell" key={i}>
-      {cutUrl(item[key]) ? (
-        <Link to={cutUrl(item[key])}>
-          {replaceUrl(entities, item[key])
-            ? replaceUrl(entities, item[key])
-            : cutUrl(item[key])}
-        </Link>
-      ) : (
-        item[key]
-      )}
-    </div>
-
-
-
-    <div className="right-cell">
-        {cutUrl(item[key]) ? (
-          <Link to={cutUrl(item[key])}>{cutUrl(item[key])}</Link>
-        ) : (
-          item[key]
-        )}
-      </div>
-  )*/

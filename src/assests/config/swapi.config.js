@@ -72,14 +72,11 @@ export const searchInCategory = (category = {}, searchData = {}) => {
   const result = [];
 
   if (pages && fieldName && fieldValue) {
-    console.log(`fieldName: ${fieldName}
-    fieldValue: ${fieldValue}`);
     for (let i = 0; i < pages.length; i++) {
       const page = pages[i];
       if (page) {
         for (let j = 0; j < page.length; j++) {
           const item = page[j];
-          console.log(`item[fieldName]: ${item[fieldName]}`);
           if (item[fieldName].includes(fieldValue)) {
             result.push(item);
             if (singleSearch) return result;
