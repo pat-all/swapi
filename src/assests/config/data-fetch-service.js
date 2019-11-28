@@ -89,7 +89,7 @@ export const fetchCategoryPageIfNeeded = (
 const fetchCategoryItem = ({ category, url }) => {
   return dispatch => {
     dispatch(requestItem({ url }));
-    return fetch(urlBuilder({ url }, {headers}))
+    return fetch(urlBuilder({ url }))
       .then(response => response.json())
       .then(json => dispatch(receiveItem({ category, json })))
       .catch(err => {
@@ -103,7 +103,7 @@ const fetchCategoryItem = ({ category, url }) => {
 
 export const fetchCategoryItemIfNeeded = (category, categoryName, url) => {
   return dispatch => {
-    if (!searchInCategory(category, {"url" : url})) {
+    if (searchInCategory(category, {"url" : url}).length === 0) {
       dispatch(fetchCategoryItem({ category: categoryName, url }));
     }
   };

@@ -53,11 +53,13 @@ export const lowDashReplacer = str => str.replace(/_/g, " ");
 export const cutUrl = str =>
   /https/.test(str) ? str.replace(SWAPI_BASE_URL, "") : null;
 
+export const isUrlCheck = str => /https/.test(str)
+
 export const replaceUrl = (categories, url) => {
   const myUrl = cutUrl(url)
   const categoryName = filterParams({ string: myUrl });
-  const pages = categories[categoryName].pages
-  const searchResults = searchInCategory(pages, {fieldName: "url", fieldValue: url})
+  const category = categories[categoryName]
+  const searchResults = searchInCategory(category, {fieldName: "url", fieldValue: url})
   const item = searchResults.length > 0 ? searchResults[0] : null 
     
   return item ? getFirstValue(item) : null;

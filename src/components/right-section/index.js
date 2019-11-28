@@ -1,47 +1,54 @@
-import React, { useEffect } from 'react'
-import { useParams, Link, useRouteMatch } from 'react-router-dom'
-import { useSelector, useDispatch } from 'react-redux'
+import React, { useEffect } from "react";
+import { useParams, Link, useRouteMatch } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
 
-import {fetchCategoryItemIfNeeded} from '../../assests/config/data-fetch-service'
+import { fetchCategoryItemIfNeeded } from "../../assests/config/data-fetch-service";
 
 import {
   lowDashReplacer,
   cutUrl,
   searchInCategory,
   replaceUrl,
-} from '../../assests/config/swapi.config'
+  isUrlCheck
+} from "../../assests/config/swapi.config";
 
-import './index.scss'
+import "./index.scss";
 
 const RightSection = () => {
-  const { url } = useRouteMatch()
-  const dispatch = useDispatch()
-  const { category: categoryName, id } = useParams()
-  const { entities, isFetching } = useSelector(state => state.categories)
-  const {connectionError}  = useSelector(state => state.errors)
-  const category = entities[categoryName]
+  const { url } = useRouteMatch();
+  const dispatch = useDispatch();
+  const { category: categoryName } = useParams();
+  const { entities, isFetching } = useSelector(state => state.categories);
+  const { connectionError } = useSelector(state => state.errors);
+  const category = entities[categoryName];
 
-  let itemKeys = []
-  let items = []
-  let item = null
+  let itemKeys = [];
+  let items = [];
+  let item = null;
 
   useEffect(() => {
-    if (!isFetching && !connectionError.isError && id && category && !item) {
-      dispatch(fetchCategoryItemIfNeeded(category, categoryName, url))
+    if (!isFetching && !connectionError.isError && category && !item) {
+      console.log(`category: ${category}
+      categoryName: ${categoryName}
+      url: ${url}`);
+      dispatch(fetchCategoryItemIfNeeded(category, categoryName, url));
     }
-  })
+  });
 
-  if(!isFetching && category && url && !item) {
-    items = searchInCategory(category, {fieldName: 'url', fieldValue: url})
-    item = items.length > 0 ? items[0] : null
-    itemKeys = item ? Object.keys(item) : []
+  if (!isFetching && category && url && !item) {
+    items = searchInCategory(category, { fieldName: "url", fieldValue: url });
+    item = items.length > 0 ? items[0] : null;
+    itemKeys = item ? Object.keys(item) : [];
   }
   return (
     <section className="right-section">
       <div className="data-container">
-        {item && itemKeys.length > 0 &&
+        {item &&
+          itemKeys.length > 0 &&
           itemKeys.map((key, i) => {
-            const style = {background: i % 2 === 0 ? '#efebe9' : 'transparent'}
+            const style = {
+              background: i % 2 === 0 ? "#efebe9" : "transparent"
+            };
             return (
               <div className="row" key={i} style={style}>
                 <div className="left-cell">{lowDashReplacer(key)}</div>
@@ -61,9 +68,13 @@ const RightSection = () => {
                   ))
                 ) : (
                   <div className="right-cell">
-                    {cutUrl(item[key]) ? (
+                    {key !== "url" &&
+                    isUrlCheck(item[key]) &&
+                    cutUrl(item[key]) ? (
                       <Link to={cutUrl(item[key])}>
-                        {cutUrl(item[key])}
+                        {replaceUrl(entities, item[key])
+                          ? replaceUrl(entities, item[key])
+                          : cutUrl(item[key])}
                       </Link>
                     ) : (
                       item[key]
@@ -71,11 +82,36 @@ const RightSection = () => {
                   </div>
                 )}
               </div>
-            )
+            );
           })}
       </div>
     </section>
-  )
-}
+  );
+};
 
-export default RightSection
+export default RightSection;
+
+/*key !== "url" &&
+  isUrlCheck(item[key]) && (
+    <div className="right-cell" key={i}>
+      {cutUrl(item[key]) ? (
+        <Link to={cutUrl(item[key])}>
+          {replaceUrl(entities, item[key])
+            ? replaceUrl(entities, item[key])
+            : cutUrl(item[key])}
+        </Link>
+      ) : (
+        item[key]
+      )}
+    </div>
+
+
+
+    <div className="right-cell">
+        {cutUrl(item[key]) ? (
+          <Link to={cutUrl(item[key])}>{cutUrl(item[key])}</Link>
+        ) : (
+          item[key]
+        )}
+      </div>
+  )*/
