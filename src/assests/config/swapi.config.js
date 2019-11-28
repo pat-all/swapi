@@ -42,8 +42,6 @@ export const filterParams = (set = {}) => {
     : null;
 };
 
-export const searchFields = ["name", "title", "model"];
-
 export const getPageFromSearch = searchStr => {
   if (pageExpTest(searchStr)) {
     return searchStr.match(regExps.number)[0];
@@ -56,18 +54,12 @@ export const changeUrl = str =>
   /https/.test(str) ? str.replace(SWAPI_BASE_URL, "") : null;
 
 export const replaceUrl = (categories, url) => {
-  const myUrl = changeUrl(url);
+  const myUrl = changeUrl(url)
   const categoryName = filterParams({ string: myUrl });
-  const urlId = filterParams({ number: myUrl });
-  const page = calcPage(urlId);
-  const id = calcIdFromUrl(urlId);
-  const item = categories[categoryName]
-    ? categories[categoryName].pages
-      ? categories[categoryName].pages[page]
-        ? categories[categoryName].pages[page][id]
-        : null
-      : null
-    : null;
+  const pages = categories[categoryName].pages
+  const searchResults = searchInCategory(pages, {fieldName: "url", fieldValue: url})
+  const item = searchResults.length > 0 ? searchResults[0] : null 
+    
   return item ? getFirstValue(item) : null;
 };
 
@@ -76,7 +68,7 @@ export const searchInCategory = (category = {}, searchData = {}) => {
   const { fieldName, fieldValue } = searchData;
   const singleSearch = fieldName === "url";
   const result = [];
-  
+
   if (pages && fieldName && fieldValue) {
     console.log(`fieldName: ${fieldName}
     fieldValue: ${fieldValue}`);
