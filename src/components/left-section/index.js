@@ -16,7 +16,7 @@ import {
   getPageFromSearch,
   pageExpTest,
   getFirstValue,
-  changeUrl,
+  cutUrl,
 } from '../../assests/config/swapi.config'
 import Pagination from '../pagination'
 
@@ -61,7 +61,7 @@ const LeftSection = () => {
   return (
     <section className="left-section">
       {items.map((item, i) => {
-        return <LeftSectionItem key={i} title={getFirstValue(item)} to={changeUrl(item.url)} />
+        return <LeftSectionItem key={i} title={getFirstValue(item)} to={cutUrl(item.url)} />
       })}
       {pagesCount > 1 && <Pagination page={activePage} pagesCount={pagesCount} />}
       {currentCount > 0 && (

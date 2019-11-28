@@ -50,11 +50,11 @@ export const getPageFromSearch = searchStr => {
 
 export const lowDashReplacer = str => str.replace(/_/g, " ");
 
-export const changeUrl = str =>
+export const cutUrl = str =>
   /https/.test(str) ? str.replace(SWAPI_BASE_URL, "") : null;
 
 export const replaceUrl = (categories, url) => {
-  const myUrl = changeUrl(url)
+  const myUrl = cutUrl(url)
   const categoryName = filterParams({ string: myUrl });
   const pages = categories[categoryName].pages
   const searchResults = searchInCategory(pages, {fieldName: "url", fieldValue: url})

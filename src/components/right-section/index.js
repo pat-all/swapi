@@ -6,7 +6,7 @@ import {fetchCategoryItemIfNeeded} from '../../assests/config/data-fetch-service
 
 import {
   lowDashReplacer,
-  changeUrl,
+  cutUrl,
   searchInCategory,
   replaceUrl,
 } from '../../assests/config/swapi.config'
@@ -48,11 +48,11 @@ const RightSection = () => {
                 {Array.isArray(item[key]) ? (
                   item[key].map((data, i) => (
                     <div className="right-cell" key={i}>
-                      {changeUrl(data) ? (
-                        <Link to={changeUrl(data)}>
+                      {cutUrl(data) ? (
+                        <Link to={cutUrl(data)}>
                           {replaceUrl(entities, data)
                             ? replaceUrl(entities, data)
-                            : changeUrl(data)}
+                            : cutUrl(data)}
                         </Link>
                       ) : (
                         data
@@ -61,9 +61,9 @@ const RightSection = () => {
                   ))
                 ) : (
                   <div className="right-cell">
-                    {changeUrl(item[key]) ? (
-                      <Link to={changeUrl(item[key])}>
-                        {changeUrl(item[key])}
+                    {cutUrl(item[key]) ? (
+                      <Link to={cutUrl(item[key])}>
+                        {cutUrl(item[key])}
                       </Link>
                     ) : (
                       item[key]
