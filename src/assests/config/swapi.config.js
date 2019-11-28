@@ -1,4 +1,4 @@
-import { SWAPI_BASE_URL, ITEMS_ON_PAGE, regExps, SEARCH_FIELDS } from "./constants";
+import { SWAPI_BASE_URL, ITEMS_ON_PAGE, regExps, SEARCH_FIELDS, API_BASE } from "./constants";
 
 export const pageExpTest = str => regExps.page.test(str);
 
@@ -16,14 +16,14 @@ export const getFirstValue = item => {
 
 export const urlBuilder = (set = {}) => {
   const { category, page, search, url } = set;
-  if (category && !page && !search) return `${SWAPI_BASE_URL}/${category}`;
+  if (category && !page && !search) return `${API_BASE}/${category}`;
   else if (category && page > 0 && !search)
-    return `${SWAPI_BASE_URL}/${category}/?page=${page}`;
+    return `${API_BASE}/${category}/?page=${page}`;
   else if (category && !page && search)
-    return `${SWAPI_BASE_URL}/${category}/?search=${search}`;
+    return `${API_BASE}/${category}/?search=${search}`;
   else if (url && !category && !page && !search)
-    return `${SWAPI_BASE_URL}${url}`;
-  else return SWAPI_BASE_URL;
+    return `${API_BASE}${url}`;
+  else return API_BASE;
 };
 
 export const filterParams = (set = {}) => {
@@ -48,7 +48,7 @@ export const getPageFromSearch = searchStr => {
 export const lowDashReplacer = str => str.replace(/_/g, " ");
 
 export const changeUrl = str =>
-  /https/.test(str) ? str.replace("https://swapi.co/api", "") : null;
+  /https/.test(str) ? str.replace(SWAPI_BASE_URL, "") : null;
 
 export const replaceUrl = (categories, url) => {
   const myUrl = changeUrl(url);

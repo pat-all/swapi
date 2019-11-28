@@ -1,23 +1,18 @@
-export const SWAPI_BASE_URL = 'http://cors-anywhere.herokuapp.com/https://swapi.co/api'
-//export const SWAPI_BASE_URL = 'http://localhost:3030/api'
+export const SWAPI_BASE_URL = 'https://swapi.co/api/'
+const CORS_BREAK = 'http://cors-anywhere.herokuapp.com/'
+export const API_BASE = CORS_BREAK + SWAPI_BASE_URL
 
 export const ITEMS_ON_PAGE = 10
 
-const STRING_EXP = /[a-z]+/
-const NUMBER_EXP = /[0-9]+/
-const PAGE_EXP = /\?page=[0-9]+/
-
 export const regExps = {
-  string: STRING_EXP,
-  number: NUMBER_EXP,
-  page: PAGE_EXP
+  string: /[a-z]+/,
+  number: /[0-9]+/,
+  page: /\?page=[0-9]+/
 }
 
-const CATEGORY = 'CATEGORY'
-const PAGE = 'PAGE'
 export const notFoundTypes = {
-  category: CATEGORY,
-  page: PAGE
+  category: 'CATEGORY',
+  page: 'PAGE'
 }
 
 export const SEARCH_FIELDS = [
