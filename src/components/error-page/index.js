@@ -14,7 +14,7 @@ const ErrorPage = () => {
       {connectionError.isError && (<h2>{connectionError.log}</h2>)}
       {!connectionError.isError && notFoundError.isError && (
         <React.Fragment>
-        <h3>`Error: ${notFoundError.log} is NOT FOUND, try:`</h3>
+        <h3>{`Error: ${notFoundError.log} is NOT FOUND, try:`}</h3>
         <ul>
           {categories.map((category, i) => (
             <li key={i}><Link to={`/${category}/`}>{`/${category}/`}</Link></li>

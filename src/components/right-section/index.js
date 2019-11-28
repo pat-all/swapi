@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useParams, Link, useRouteMatch } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 
@@ -15,30 +15,31 @@ import './index.scss'
 
 const RightSection = () => {
   const { url } = useRouteMatch()
+  //const [item, setItem] = useState(null)
   const dispatch = useDispatch()
   const { category: categoryName, id } = useParams()
   const { entities, isFetching } = useSelector(state => state.categories)
   const connectionError  = useSelector(state => state.errors.connectionError.isError)
   const category = entities[categoryName]
 
-  let itemKeys = null
+  let itemKeys = []
   let item = null
 
   useEffect(() => {
-    if (!isFetching && !connectionError && id && category) {
+    if (!isFetching && !connectionError && id && category && !item) {
       dispatch(fetchCategoryItemIfNeeded(category, categoryName, url))
     }
   })
 
-  if(!isFetching && category) {
-    item = searchInCategory(category, {"url": url})
+  if(!isFetching && category && url && !item) {
+    item = searchInCategory(category, {fieldName: 'url', fieldValue: url})
     console.log(item)
     itemKeys = item ? Object.keys(item) : []
   }
   return (
     <section className="right-section">
       <div className="data-container">
-        {itemKeys && itemKeys.length > 0 &&
+        {item && itemKeys.length > 0 &&
           itemKeys.map((key, i) => {
             const style =
               i % 2 === 0

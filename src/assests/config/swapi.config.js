@@ -71,14 +71,16 @@ const findItemBySearchData = (arr, searchData) =>
 
 export const searchInCategory = (category = {}, searchData = {}) => {
   const { pages } = category;
-  const { fieldName, fieldvalue } = searchData
-  const reqExp = /[0-9]$/
+  const { fieldName, fieldValue } = searchData
   let result = null
-  if(pages && fieldName && fieldvalue){
-    fieldName =  fieldName === 'url' ? reqExp.test(fieldName) ? fieldName + "/" : fieldName : fieldName
+
+  if(pages && fieldName && fieldValue){
+    console.log(`fieldName: ${fieldName}
+    fieldValue: ${fieldValue}`)
     pages.forEach(page => {
       page.forEach(item => {
-        if(changeUrl(item.url) === url) result = item
+        console.log(`item[fieldName]: ${item[fieldName]}`)
+        if(item[fieldName].includes(fieldValue)) result = item
       })
     })
   }
@@ -90,7 +92,7 @@ const searchData = (set = {}) => {
   const result = []
   if(categories && categories[category] && query){
     SEARCH_FIELDS.forEach(field => {
-      const iterResult = searchInCategory(categories[category], {field: query})
+      const iterResult = searchInCategory(categories[category], {[field]: query})
       if(iterResult) result.push(iterResult)
     })
   }
