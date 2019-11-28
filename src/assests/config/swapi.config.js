@@ -1,4 +1,10 @@
-import { SWAPI_BASE_URL, ITEMS_ON_PAGE, regExps, SEARCH_FIELDS, API_BASE } from "./constants";
+import {
+  SWAPI_BASE_URL,
+  ITEMS_ON_PAGE,
+  regExps,
+  SEARCH_FIELDS,
+  API_BASE
+} from "./constants";
 
 export const pageExpTest = str => regExps.page.test(str);
 
@@ -21,8 +27,7 @@ export const urlBuilder = (set = {}) => {
     return `${API_BASE}/${category}/?page=${page}`;
   else if (category && !page && search)
     return `${API_BASE}/${category}/?search=${search}`;
-  else if (url && !category && !page && !search)
-    return `${API_BASE}${url}`;
+  else if (url && !category && !page && !search) return `${API_BASE}${url}`;
   else return API_BASE;
 };
 
@@ -58,43 +63,52 @@ export const replaceUrl = (categories, url) => {
   const id = calcIdFromUrl(urlId);
   const item = categories[categoryName]
     ? categories[categoryName].pages
-    ? categories[categoryName].pages[page]
-    ? categories[categoryName].pages[page][id]
-    : null
-    : null 
+      ? categories[categoryName].pages[page]
+        ? categories[categoryName].pages[page][id]
+        : null
+      : null
     : null;
   return item ? getFirstValue(item) : null;
 };
 
-const findItemBySearchData = (arr, searchData) =>
-  arr.find(el => changeUrl(el[searchData.fieldName]) === searchData.value);
-
 export const searchInCategory = (category = {}, searchData = {}) => {
   const { pages } = category;
-  const { fieldName, fieldValue } = searchData
-  let result = null
-
-  if(pages && fieldName && fieldValue){
+  const { fieldName, fieldValue } = searchData;
+  const singleSearch = fieldName === "url";
+  const result = [];
+  
+  if (pages && fieldName && fieldValue) {
     console.log(`fieldName: ${fieldName}
-    fieldValue: ${fieldValue}`)
-    pages.forEach(page => {
-      page.forEach(item => {
-        console.log(`item[fieldName]: ${item[fieldName]}`)
-        if(item[fieldName].includes(fieldValue)) result = item
-      })
-    })
+    fieldValue: ${fieldValue}`);
+    for (let i = 0; i < pages.length; i++) {
+      const page = pages[i];
+      if (page) {
+        for (let j = 0; j < page.length; j++) {
+          const item = page[j];
+          console.log(`item[fieldName]: ${item[fieldName]}`);
+          if (item[fieldName].includes(fieldValue)) {
+            result.push(item);
+            if (singleSearch) return result;
+          }
+        }
+      }
+      if (singleSearch && result.length > 0) return result;
+    }
+    return result;
   }
-  return result
+  return result;
 };
 
-const searchData = (set = {}) => {
-  const { categories, category, query } = set
-  const result = []
-  if(categories && categories[category] && query){
+export const searchData = (set = {}) => {
+  const { categories, category, query } = set;
+  const result = [];
+  if (categories && categories[category] && query) {
     SEARCH_FIELDS.forEach(field => {
-      const iterResult = searchInCategory(categories[category], {[field]: query})
-      if(iterResult) result.push(iterResult)
-    })
+      const iterResult = searchInCategory(categories[category], {
+        [field]: query
+      });
+      if (iterResult.length > 0) result.push(iterResult);
+    });
   }
-  return result
-}
+  return result;
+};

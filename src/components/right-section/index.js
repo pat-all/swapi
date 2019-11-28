@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import { useParams, Link, useRouteMatch } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 
@@ -15,7 +15,6 @@ import './index.scss'
 
 const RightSection = () => {
   const { url } = useRouteMatch()
-  //const [item, setItem] = useState(null)
   const dispatch = useDispatch()
   const { category: categoryName, id } = useParams()
   const { entities, isFetching } = useSelector(state => state.categories)
@@ -23,6 +22,7 @@ const RightSection = () => {
   const category = entities[categoryName]
 
   let itemKeys = []
+  let items = []
   let item = null
 
   useEffect(() => {
@@ -32,7 +32,8 @@ const RightSection = () => {
   })
 
   if(!isFetching && category && url && !item) {
-    item = searchInCategory(category, {fieldName: 'url', fieldValue: url})
+    items = searchInCategory(category, {fieldName: 'url', fieldValue: url})
+    item = items.length > 0 ? items[0] : null
     itemKeys = item ? Object.keys(item) : []
   }
   return (
