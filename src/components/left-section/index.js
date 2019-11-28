@@ -49,7 +49,7 @@ const LeftSection = () => {
     }
   })
   useEffect(() => {
-    if (!isFetching && !connectionError && category && pageExpTest(searchStr)) {
+    if (!isFetching && !connectionError.isError && category && pageExpTest(searchStr)) {
       dispatch(setActivePage({category: categoryName, page}))
     }
   })

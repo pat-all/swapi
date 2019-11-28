@@ -19,21 +19,20 @@ const RightSection = () => {
   const dispatch = useDispatch()
   const { category: categoryName, id } = useParams()
   const { entities, isFetching } = useSelector(state => state.categories)
-  const connectionError  = useSelector(state => state.errors.connectionError.isError)
+  const {connectionError}  = useSelector(state => state.errors)
   const category = entities[categoryName]
 
   let itemKeys = []
   let item = null
 
   useEffect(() => {
-    if (!isFetching && !connectionError && id && category && !item) {
+    if (!isFetching && !connectionError.isError && id && category && !item) {
       dispatch(fetchCategoryItemIfNeeded(category, categoryName, url))
     }
   })
 
   if(!isFetching && category && url && !item) {
     item = searchInCategory(category, {fieldName: 'url', fieldValue: url})
-    console.log(item)
     itemKeys = item ? Object.keys(item) : []
   }
   return (
@@ -41,10 +40,7 @@ const RightSection = () => {
       <div className="data-container">
         {item && itemKeys.length > 0 &&
           itemKeys.map((key, i) => {
-            const style =
-              i % 2 === 0
-                ? { background: '#efebe9' }
-                : { background: 'transparent' }
+            const style = {background: i % 2 === 0 ? '#efebe9' : 'transparent'}
             return (
               <div className="row" key={i} style={style}>
                 <div className="left-cell">{lowDashReplacer(key)}</div>
