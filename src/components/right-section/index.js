@@ -55,8 +55,8 @@ const RightSection = () => {
                 <div className="right-cell">
                   {Array.isArray(item[key]) ? (
                     item[key].map((data, i) => (
-                      <React.Fragment>
-                        <Link key={i} to={cutUrl(data)}>
+                      <React.Fragment key={i}>
+                        <Link to={cutUrl(data)}>
                           {replaceUrl(entities, data)
                             ? replaceUrl(entities, data)
                             : cutUrl(data)}
