@@ -52,35 +52,28 @@ const RightSection = () => {
             return (
               <div className="row" key={i} style={style}>
                 <div className="left-cell">{lowDashReplacer(key)}</div>
-                {Array.isArray(item[key]) ? (
-                  item[key].map((data, i) => (
-                    <div className="right-cell" key={i}>
-                      {cutUrl(data) ? (
-                        <Link to={cutUrl(data)}>
+                <div className="right-cell">
+                  {Array.isArray(item[key]) ? (
+                    item[key].map((data, i) => (
+                      <React.Fragment>
+                        <Link key={i} to={cutUrl(data)}>
                           {replaceUrl(entities, data)
                             ? replaceUrl(entities, data)
                             : cutUrl(data)}
-                        </Link>
-                      ) : (
-                        data
-                      )}
-                    </div>
-                  ))
-                ) : (
-                  <div className="right-cell">
-                    {key !== "url" &&
-                    isUrlCheck(item[key]) &&
-                    cutUrl(item[key]) ? (
-                      <Link to={cutUrl(item[key])}>
-                        {replaceUrl(entities, item[key])
-                          ? replaceUrl(entities, item[key])
-                          : cutUrl(item[key])}
-                      </Link>
-                    ) : (
-                      item[key]
-                    )}
-                  </div>
-                )}
+                        </Link>{" "}
+                        <br></br>
+                      </React.Fragment>
+                    ))
+                  ) : isUrlCheck(item[key]) && cutUrl(item[key]) ? (
+                    <Link to={cutUrl(item[key])}>
+                      {key !== "url" && replaceUrl(entities, item[key])
+                        ? replaceUrl(entities, item[key])
+                        : cutUrl(item[key])}
+                    </Link>
+                  ) : (
+                    item[key]
+                  )}
+                </div>
               </div>
             );
           })}

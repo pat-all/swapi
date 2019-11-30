@@ -51,7 +51,7 @@ export const getPageFromSearch = searchStr => {
 export const lowDashReplacer = str => str.replace(/_/g, " ");
 
 export const cutUrl = str =>
-  /https/.test(str) ? str.replace(SWAPI_BASE_URL, "") : null;
+  str.includes(SWAPI_BASE_URL) ? str.replace(SWAPI_BASE_URL, "") : str;
 
 export const isUrlCheck = str => /https/.test(str)
 
