@@ -28,9 +28,6 @@ const RightSection = () => {
 
   useEffect(() => {
     if (!isFetching && !connectionError.isError && category && !item) {
-      console.log(`category: ${category}
-      categoryName: ${categoryName}
-      url: ${url}`);
       dispatch(fetchCategoryItemIfNeeded(category, categoryName, url));
     }
   });

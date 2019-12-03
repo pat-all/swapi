@@ -6,7 +6,7 @@ import './index.scss'
 
 import LeftSectionItem from '../left-section-item'
 
-import { fetchCategoryPageIfNeeded } from '../../assests/config/data-fetch-service'
+import { fetchCategoryPageIfNeeded, fetchDataBySearch } from '../../assests/config/data-fetch-service'
 
 import { ITEMS_ON_PAGE, notFoundTypes } from '../../assests/config/constants'
 
@@ -17,13 +17,15 @@ import {
   pageExpTest,
   getFirstValue,
   cutUrl,
+  getSearchQuery,
 } from '../../assests/config/swapi.config'
 import Pagination from '../pagination'
 
 const LeftSection = () => {
   const { category: categoryName } = useParams()
-  const searchStr = useLocation().search
-  const page = getPageFromSearch(searchStr)
+  const {pathname, search} = useLocation()
+  const page = `/${categoryName}/` === pathname ? getPageFromSearch(search) : undefined
+  const searchQuery = `/${categoryName}/` === pathname && getSearchQuery(search) && getSearchQuery(search).trim().length > 0 ? getSearchQuery(search).trim() : null
   const { entities, isFetching } = useSelector(state => state.categories)
   const {connectionError, notFoundError } = useSelector(state => state.errors)
   const category = entities[categoryName]
@@ -40,23 +42,30 @@ const LeftSection = () => {
     if (entitiesCount > 0 && !connectionError.isError) {
       if(categoriesNames.includes(categoryName)) {
         if(notFoundError.isError) dispatch(setNotFoundError({isError: false, type: undefined, log: ""}))
-        dispatch(
-          fetchCategoryPageIfNeeded(category, {
-            category: categoryName,
-            page: activePage
-          }))
+        if(!searchQuery){
+          dispatch(
+            fetchCategoryPageIfNeeded(category, {
+              category: categoryName,
+              page: activePage
+            }))
+        } else if(category.search.query !== searchQuery){
+          dispatch(fetchDataBySearch(categoryName, searchQuery))
+        }
       } else dispatch(setNotFoundError({isError: true, type: notFoundTypes.category, log: categoryName}))
     }
   })
   useEffect(() => {
-    if (!isFetching && !connectionError.isError && category && pageExpTest(searchStr)) {
+    if (!isFetching && !connectionError.isError && category && pageExpTest(search) && !searchQuery && page) {
       dispatch(setActivePage({category: categoryName, page}))
     }
   })
 
-  if (category && category.pages && category.pages[activePage]) {
+  if (category && category.pages && category.pages[activePage] && !searchQuery) {
     items = category.pages[activePage]
     currentCount = items.length
+  } else if(category && category.search && searchQuery && category.search.query === searchQuery){
+    items = category.search.results
+    //currentCount = items.length
   }
   return (
     <section className="left-section">

@@ -1,5 +1,7 @@
 import { createSlice } from "redux-starter-kit";
 
+import {searchInCategory} from "../../assests/config/swapi.config"
+
 const categorySlice = createSlice({
   slice: "categories",
   initialState: { isFetching: false, entities: {} },
@@ -11,7 +13,7 @@ const categorySlice = createSlice({
       state.isFetching = false;
       const categoriesNames = Object.keys(action.payload);
       categoriesNames.map(
-        name => (state.entities[name] = { count: 0, activePage: 1, pages: [] })
+        name => (state.entities[name] = { count: 0, activePage: 1, pages: [], search:{query: "", results: []} })
       );
     },
     requestPage(state, action) {},
@@ -36,6 +38,25 @@ const categorySlice = createSlice({
     },
     cancelFetching(state) {
       state.isFetching = false;
+    },
+    searchRequest(state, action){},
+    receiveSearchData(state, action){
+      const {category, query, json} = action.payload
+      const searchResults = json.results
+      const pages = state.entities[category].pages
+      state.entities[category].search = {query, results: searchResults}
+
+      searchResults.forEach(item => {
+        if(searchInCategory(state.entities[category], {fieldName: "url", fieldValue: item.url}).length === 0){
+          if(pages[0]){
+            pages[0].push(item)
+          } else {
+            pages[0] = [item]
+          }
+        }
+      })
+      
+      
     }
   }
 });
@@ -49,7 +70,9 @@ export const {
   requestPage,
   receivePage,
   fetchDataFail,
-  cancelFetching
+  cancelFetching,
+  searchRequest,
+  receiveSearchData,
 } = categorySlice.actions;
 
 export default categorySlice.reducer;

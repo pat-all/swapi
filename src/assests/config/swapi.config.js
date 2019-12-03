@@ -103,3 +103,9 @@ export const searchData = (set = {}) => {
   }
   return result;
 };
+
+export const searchExpTest = str => regExps.search.test(str)
+
+export const getSearchQuery = str => searchExpTest(str) ? str.replace("?search=", "") : null
+
+export const replaceDubleSlash = str => str.replace("//", "/")

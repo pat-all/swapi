@@ -6,7 +6,6 @@ import { useSelector, useDispatch } from 'react-redux'
 import './index.scss'
 
 //components
-import HeaderButton from '../header-button'
 import Search from '../search'
 
 import { fetchCategoriesNamesIfNeeded } from '../../assests/config/data-fetch-service'
@@ -40,7 +39,6 @@ const Header = () => {
       </div>
       <div className="header-section">
         <Search />
-        <HeaderButton>Search</HeaderButton>
       </div>
     </header>
   )

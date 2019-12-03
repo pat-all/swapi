@@ -7,7 +7,8 @@ export const ITEMS_ON_PAGE = 10
 export const regExps = {
   string: /[a-z]+/,
   number: /[0-9]+/,
-  page: /\?page=[0-9]+/
+  page: /\?page=[0-9]+/,
+  search: /\?search=.+/
 }
 
 export const notFoundTypes = {

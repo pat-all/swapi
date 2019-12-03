@@ -11,7 +11,9 @@ import {
   receiveItem,
   requestPage,
   receivePage,
-  cancelFetching
+  cancelFetching,
+  searchRequest,
+  receiveSearchData,
 } from "../../redux-stuff/reducers/category-slice";
 
 const headers = {
@@ -108,3 +110,17 @@ export const fetchCategoryItemIfNeeded = (category, categoryName, url) => {
     }
   };
 };
+
+export const fetchDataBySearch = (category, search) => {
+  return dispatch => {
+    if(category && search){
+      dispatch(searchRequest({category, search}))
+      return fetch(urlBuilder({category, search}))
+      .then(response => response.json())
+      .then(json => dispatch(receiveSearchData({category, query: search, json})))
+      .catch(err => {
+        console.log(err)
+      })
+    }
+  }
+}
