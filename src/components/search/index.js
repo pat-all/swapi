@@ -6,13 +6,9 @@ import HeaderButton from "../header-button";
 import "./index.scss";
 
 const Search = () => {
-  const [query, setSquery] = useState("");
+  const [query, setQuery] = useState("");
   const { pathname } = useLocation();
   const category = pathname.split("/")[1];
-  const inputChange = e => {
-    const newValue = e.target.value;
-    setSquery(newValue);
-  };
   return (
     <div className="search">
       <input
@@ -20,7 +16,7 @@ const Search = () => {
         placeholder="Search"
         value={query}
         onChange={e => {
-          inputChange(e);
+          setQuery(e.target.value);
         }}
       />
       <HeaderButton>

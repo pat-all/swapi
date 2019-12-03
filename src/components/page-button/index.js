@@ -5,9 +5,10 @@ import './index.scss'
 
 import {replaceDubleSlash} from "../../assests/config/swapi.config"
 
-const PageButton = ({ children, to, clickHandler }) => {
+const PageButton = ({ children, to, clickHandler, style }) => {
+  console.log(style)
   return (
-    <button className="page-button" onClick={clickHandler}>
+    <button className="page-button" onClick={clickHandler} style={style}>
       {to ? (<Link to={replaceDubleSlash(to)}>{children}</Link>) : children}
     </button>
   )
