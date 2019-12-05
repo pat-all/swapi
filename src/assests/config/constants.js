@@ -1,7 +1,7 @@
 export const SWAPI_BASE_URL = 'https://swapi.co/api'
 const CORS_BREAK = 'http://cors-anywhere.herokuapp.com/'
-export const API_BASE = CORS_BREAK + SWAPI_BASE_URL
-//export const API_BASE = '/api'
+//export const API_BASE = CORS_BREAK + SWAPI_BASE_URL
+export const API_BASE = '/api'
 
 export const ITEMS_ON_PAGE = 10
 
