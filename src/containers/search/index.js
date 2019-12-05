@@ -10,6 +10,7 @@ const Search = () => {
   const { pathname } = useLocation();
   const category = pathname.split("/")[1];
   const isDisabled = pathname.length === 1;
+  const searchButtonActive = query.trim().length > 0
   return (
     <div className="search">
       <input
@@ -21,7 +22,7 @@ const Search = () => {
           setQuery(e.target.value);
         }}
       />
-      {isDisabled ? (
+      {isDisabled || !searchButtonActive ? (
         <HeaderButton>Search</HeaderButton>
       ) : (
         <HeaderButton>
