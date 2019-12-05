@@ -3,7 +3,8 @@ import { useRouteMatch } from 'react-router-dom'
 
 import './index.scss'
 
-import PageButton from '../page-button'
+import PageButton from '../../components/page-button'
+import PageButtonsContainer from '../page-buttons-container'
 
 const Pagination = ({ page, pagesCount }) => {
   const showLeftStep = page > 1
@@ -46,10 +47,10 @@ const Pagination = ({ page, pagesCount }) => {
   return (
     <div className="pagination">
       {prevPages.length > 0 && isShownPrevPages && (
-        <PageNumbers nums={prevPages} clicHandler={hidePageButtons}/>
+        <PageButtonsContainer nums={prevPages} clicHandler={hidePageButtons}/>
       )}
       {nextPages.length > 0 && isShownNextPages && (
-        <PageNumbers nums={nextPages} clicHandler={hidePageButtons}/>
+        <PageButtonsContainer nums={nextPages} clicHandler={hidePageButtons}/>
       )}
       <ul>
         {showLeftStep && (
@@ -81,29 +82,3 @@ const Pagination = ({ page, pagesCount }) => {
 }
 
 export default Pagination
-
-const PageNumbers = ({ nums, clicHandler }) => {
-  const columns = 4
-  const templateColumns = nums.length >= columns ? columns : nums.length
-  const gridSettings = (num, columns)=> {
-    const row = Math.floor(num / (columns + 1)) + 1
-    const column = num % (columns ) === 0 ? columns : num % (columns)
-    return {
-      "gridColumn": `${column} / ${column + 1}`,
-      "gridRow": `${row} / ${row + 1}`
-    }
-  }
-  const { url } = useRouteMatch()
-  return (
-    <div className="page-buttons-container" style={{"grid-template-columns": `repeat(${templateColumns}, 39px)`}}>
-      {nums.map((num, i) => {
-        console.log(i + 1)
-        return (
-            <PageButton key={num} to={`${url}/?page=${num}`} clickHandler={clicHandler} style={gridSettings(i + 1, columns)}>
-              {num}
-            </PageButton>
-        )
-      })}
-    </div>
-  )
-}

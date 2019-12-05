@@ -15,12 +15,10 @@ const Header = () => {
   const connectionError = useSelector(state => state.errors.connectionError.isError)
   const categoriesNames = Object.keys(categories.entities)
   const dispatch = useDispatch()
-
-  const {isFetching} = categories
-
+  const { isFetching } = categories
+  
   useEffect(() => {
     if(!connectionError && !isFetching && categoriesNames.length === 0) {
-      //dispatch(fetchCategoriesNamesIfNeeded(categories))
       dispatch(requestAll())
     }
   })

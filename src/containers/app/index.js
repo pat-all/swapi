@@ -6,10 +6,10 @@ import { Route, BrowserRouter as Router, Switch } from 'react-router-dom'
 
 //components
 import Header from '../header'
-import Home from '../home'
+import Home from '../../components/home'
 import Category from '../category'
 import Portal from '../portal'
-import Loader from '../loader'
+import Loader from '../../components/loader'
 import ErrorPage from '../error-page'
 
 const App = () => {

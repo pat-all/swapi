@@ -1,0 +1,9 @@
+@import '../../assests/scss/vars';
+
+.page-buttons-container {
+  @extend %buttons-container;
+  border: 3px solid $button-color;
+  grid-template-columns: repeat(4, 39px);
+  padding: 10px;
+  margin: 10px 50px;
+}

@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from './components/app';
+import App from './containers/app';
 import * as serviceWorker from './serviceWorker';
 
 import { configureStore } from "redux-starter-kit";
