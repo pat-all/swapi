@@ -31,9 +31,9 @@ const categorySlice = createSlice({
     receiveItem(state, action) {
       const { category, json } = action.payload;
       if (state.entities[category].pages[0]) {
-        state.entities[category].pages[0].push(json);
+        state.entities[category].pages[0].push(json.results[0]);
       } else {
-        state.entities[category].pages[0] = [json];
+        state.entities[category].pages[0] = [json.results[0]];
       }
     },
     cancelFetching(state) {

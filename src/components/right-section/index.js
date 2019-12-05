@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useParams, Link, useRouteMatch } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 
-import { fetchCategoryItemIfNeeded } from "../../assests/config/data-fetch-service";
+import { requestItem } from "../../redux-stuff/reducers/category-slice"
 
 import {
   lowDashReplacer,
@@ -27,8 +27,8 @@ const RightSection = () => {
   let item = null;
 
   useEffect(() => {
-    if (!isFetching && !connectionError.isError && category && !item) {
-      dispatch(fetchCategoryItemIfNeeded(category, categoryName, url));
+    if (!isFetching && !connectionError.isError && category && !item && searchInCategory(category, { fieldName: "url", fieldValue: url }).length === 0) {
+      dispatch(requestItem({ category: categoryName, url }));
     }
   });
 

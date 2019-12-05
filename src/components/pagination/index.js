@@ -17,22 +17,23 @@ const Pagination = ({ page, pagesCount }) => {
 
   const { url } = useRouteMatch()
 
-  const leftDotsClickHandler = () => {
-    const newPages = []
-    for (let i = 1; i < page; i++) {
-      newPages.push(i)
+  const pagesRange = function* (start, end){
+    while(start < end){
+      yield start++
     }
+  }
 
-    setPrevPages(newPages)
+  const leftDotsClickHandler = () => {
+    const newPages = pagesRange(1, page)
+
+    setPrevPages([...newPages])
     togglePrevPages(!isShownPrevPages)
     toggleNextPages(false)
   }
   const rightDotsClickHandler = () => {
-    const newPages = []
-    for (let i = page + 1; i <= pagesCount; i++) {
-      newPages.push(i)
-    }
-    setNextPages(newPages)
+    const newPages = pagesRange(page + 1, pagesCount + 1)
+    
+    setNextPages([...newPages])
     toggleNextPages(!isShownNextPages)
     togglePrevPages(false)
   }

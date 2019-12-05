@@ -6,12 +6,10 @@ import './index.scss'
 
 import LeftSectionItem from '../left-section-item'
 
-import { fetchCategoryPageIfNeeded, fetchDataBySearch } from '../../assests/config/data-fetch-service'
-
 import { ITEMS_ON_PAGE, notFoundTypes } from '../../assests/config/constants'
 
 import { setNotFoundError } from '../../redux-stuff/reducers/error-slice'
-import { setActivePage } from '../../redux-stuff/reducers/category-slice'
+import { setActivePage, requestPage, searchRequest } from '../../redux-stuff/reducers/category-slice'
 import {
   getPageFromSearch,
   pageExpTest,
@@ -42,14 +40,10 @@ const LeftSection = () => {
     if (entitiesCount > 0 && !connectionError.isError) {
       if(categoriesNames.includes(categoryName)) {
         if(notFoundError.isError) dispatch(setNotFoundError({isError: false, type: undefined, log: ""}))
-        if(!searchQuery){
-          dispatch(
-            fetchCategoryPageIfNeeded(category, {
-              category: categoryName,
-              page: activePage
-            }))
-        } else if(category.search.query !== searchQuery){
-          dispatch(fetchDataBySearch(categoryName, searchQuery))
+        if(!searchQuery && category.pages && !category.pages[activePage]){
+            dispatch(requestPage({category:categoryName, page: activePage}))
+        } else if(searchQuery && category.search.query !== searchQuery){
+          dispatch(searchRequest({category: categoryName, search: searchQuery}))
         }
       } else dispatch(setNotFoundError({isError: true, type: notFoundTypes.category, log: categoryName}))
     }
@@ -65,7 +59,6 @@ const LeftSection = () => {
     currentCount = items.length
   } else if(category && category.search && searchQuery && category.search.query === searchQuery){
     items = category.search.results
-    //currentCount = items.length
   }
   return (
     <section className="left-section">

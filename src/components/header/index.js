@@ -8,7 +8,7 @@ import './index.scss'
 //components
 import Search from '../search'
 
-import { fetchCategoriesNamesIfNeeded } from '../../assests/config/data-fetch-service'
+import {requestAll} from '../../redux-stuff/reducers/category-slice'
 
 const Header = () => {
   const categories = useSelector(state => state.categories)
@@ -16,8 +16,13 @@ const Header = () => {
   const categoriesNames = Object.keys(categories.entities)
   const dispatch = useDispatch()
 
+  const {isFetching} = categories
+
   useEffect(() => {
-    if(!connectionError) dispatch(fetchCategoriesNamesIfNeeded(categories))
+    if(!connectionError && !isFetching && categoriesNames.length === 0) {
+      //dispatch(fetchCategoriesNamesIfNeeded(categories))
+      dispatch(requestAll())
+    }
   })
   return (
     <header>
