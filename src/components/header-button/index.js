@@ -4,7 +4,7 @@ import './index.scss';
 
 const HeaderButton = ({children}) => {
   return(
-    <button className="header-item header-button">
+    <button className="nav-item header-button">
       {children}
     </button>
 );}

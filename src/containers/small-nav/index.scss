@@ -1,0 +1,21 @@
+@import '../../assests/scss/vars';
+
+.small-nav {
+  position: absolute;
+  z-index: 1000;
+  background-color: $special-color;
+  grid-auto-columns: 1 / 3;
+  width: 100%;
+  display: none;
+}
+
+@media screen and(max-width: 1024px){
+  .small-nav {
+    display: grid;
+  }
+
+  .small-search{
+    display: grid;
+    justify-self: center;
+  }
+}

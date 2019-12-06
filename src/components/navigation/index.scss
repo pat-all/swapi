@@ -1,0 +1,39 @@
+@import '../../assests/scss/vars';
+
+.selected {
+  color: $active-link-color;
+  &:before {
+    content: '';
+    bottom: 0;
+    left: 0;
+    position: absolute;
+    width: 100%;
+    height: 2px;
+    background-color: $active-link-color;
+  }
+}
+
+.navigation{
+  display: grid;
+  grid-auto-flow: column;
+}
+
+.nav-item {
+  padding: 10px 20px;
+  font-size: 20px;
+  text-transform: capitalize;
+  cursor: pointer;
+}
+
+.nav-link {
+  @extend %link-decoration;
+}
+
+@media screen and(max-width: 1024px){
+  .nav-item{
+    justify-self: center;
+  }
+  .navigation{
+    grid-auto-flow: row;
+  }
+}

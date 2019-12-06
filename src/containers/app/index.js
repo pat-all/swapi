@@ -11,16 +11,19 @@ import Category from '../category'
 import Portal from '../portal'
 import Loader from '../../components/loader'
 import ErrorPage from '../error-page'
+import SmallNav from '../small-nav'
 
 const App = () => {
   const categories = useSelector(state => state.categories)
   const { notFoundError, connectionError } = useSelector(state => state.errors)
   const { isFetching } = categories
+  const isActive = useSelector(state => state.features.isBurgerActive)
 
   return (
     <div className="App">
       <Router>
         <Header />
+        {isActive && <SmallNav />}
         <Switch>
           <Route exact path="/" component={Home} />
           <Route path="/:category">

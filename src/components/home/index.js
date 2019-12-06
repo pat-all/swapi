@@ -3,7 +3,7 @@ import React from 'react';
 import './index.scss';
 
 const Home = () => (
-  <div>
+  <div className="home">
     <h2>
       Hello, this is Home component
     </h2>
