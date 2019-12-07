@@ -1,10 +1,12 @@
 import React from "react";
+import {useSelector} from 'react-redux'
 
 //styles
 import "./index.scss";
 
 //hooks
 import useCategoryNames from "../../assests/hooks/useCategoryNames";
+import useBurgerActive from "../../assests/hooks/useBurgerActive";
 
 //components
 import Search from "../search";
@@ -13,6 +15,11 @@ import Navigation from "../../components/navigation";
 
 const Header = () => {
   const categoriesNames = useCategoryNames();
+  const setActive = useBurgerActive()
+  const isActive = useSelector(state => state.features.isBurgerActive)
+  const toggleBurgerActive = () => {
+    setActive(!isActive)
+  }
 
   return (
     <header>
@@ -26,7 +33,7 @@ const Header = () => {
         </div>
       </div>
       <div className="small-menu">
-        <Burger />
+        <Burger isActive={isActive} toggleActive={toggleBurgerActive} />
       </div>
     </header>
   );

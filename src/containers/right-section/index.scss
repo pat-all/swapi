@@ -3,6 +3,7 @@
 .right-section{
   grid-column: 2 / 3;
   background-color: $right-section-color;
+  position: relative;
 }
 
 .data-container {
@@ -24,5 +25,11 @@
   a {
     @extend %link-decoration;
     color: $active-link-color;
+  }
+}
+
+@media screen and(max-width: 1024px){
+  .right-section{
+    grid-column: 1 / 3;
   }
 }

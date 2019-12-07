@@ -6,6 +6,8 @@ import "./index.scss";
 
 import LeftSectionItem from "../../components/left-section-item";
 
+import useLeftActive from '../../assests/hooks/useLeftActive'
+
 import { ITEMS_ON_PAGE, notFoundTypes } from "../../assests/config/constants";
 
 import { setNotFoundError } from "../../redux-stuff/reducers/error-slice";
@@ -41,8 +43,13 @@ const LeftSection = () => {
   const categoriesNames = Object.keys(entities);
   const entitiesCount = categoriesNames.length;
   const dispatch = useDispatch();
+  const isActive = useSelector(state => state.features.isLeftSectionActive)
   const totalCount = category ? (category.count ? category.count : 0) : 0;
   const pagesCount = totalCount ? Math.ceil(totalCount / ITEMS_ON_PAGE) : 0;
+  const setActive = useLeftActive()
+  const toggleActive = () => {
+    setActive(!isActive)
+  }
   let items = [];
   let currentCount = 0;
 
@@ -100,13 +107,14 @@ const LeftSection = () => {
     items = category.search.results;
   }
   return (
-    <section className="left-section">
+    <section className={isActive ? "left-section active" : "left-section"}>
       {items.map((item, i) => {
         return (
           <LeftSectionItem
             key={i}
             title={getFirstValue(item)}
             to={cutUrl(item.url)}
+            toggleActive={toggleActive}
           />
         );
       })}

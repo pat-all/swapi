@@ -1,7 +1,7 @@
 @import '../../assests/scss/vars';
 
 header {
-  position: absolute;
+  position: fixed;
   top: 0;
   width: 100%;
   display: grid;
@@ -10,6 +10,7 @@ header {
   padding: 10px;
   background-color: $special-color;
   color: $header-font-color;
+  z-index: 10000;
 }
 
 .header-section {

@@ -1,11 +1,25 @@
 @import '../../assests/scss/vars';
 
-.left-section{
+.left-section {
   grid-column: 1 / 2;
   background-color: $left-section-color;
+  position: relative;
 }
 
-.legend{
+.legend {
   text-align: center;
   color: $active-link-color;
+}
+
+@media screen and(max-width: 1024px){
+  .left-section {
+    position: absolute;
+    height: 100%;
+    z-index: 100;
+    width: 50%;
+    display: none;
+  }
+  .left-section.active{
+    display: block;
+  }
 }
